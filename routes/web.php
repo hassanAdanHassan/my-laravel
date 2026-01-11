@@ -1,0 +1,69 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserContrller;
+use App\Http\Controllers\groupController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\productController;
+use \App\Http\Controllers\SupplierController;
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
+|category.st
+*/
+
+Route::prefix('category')->group(function () {
+
+    Route::get('/', [CategoryController::class, 'index'])->name('category.index');
+    Route::post('/store', [CategoryController::class, 'store'])->name('category.store');
+    Route::get('/edit/{id}', [CategoryController::class, 'edit'])->name('category.edit');
+    Route::put('/update/{id}', [CategoryController::class, 'update'])->name('category.update');
+    Route::post('/destroy/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
+});
+Route::prefix('groupCategory')->group(function () {
+
+    Route::get('/group', [groupController::class, 'index'])->name('groupCategory.index');
+    Route::post('/store', [groupController::class, 'store'])->name('groupCategory.store');
+    Route::get('/edit/{id}', [groupController::class, 'edit'])->name('groupCategory.edit');
+    Route::post('/update/{id}', [groupController::class, 'update'])->name('groupCategory.update');
+    Route::post('/destroy/{id}', [groupController::class, 'destroy'])->name('groupCategory.destroy');
+});
+Route::prefix('products')->group(function () {
+    Route::get('/', [productController::class, 'index'])->name('products.index');
+    Route::post('/store', [productController::class, 'store'])->name('products.store');
+    Route::get('/edit/{id}', [productController::class, 'edit'])->name('products.edit');
+    Route::post('/update/{id}', [productController::class, 'update'])->name('products.update');
+    Route::post('/destroy/{id}', [productController::class, 'destroy'])->name('products.destroy');
+});
+Route::prefix('Supplier')->group(function () {
+
+    Route::get('/', [SupplierController::class, 'index'])->name('supplier.index');
+    Route::post('/store', [SupplierController::class, 'store'])->name('supplier.store');
+    Route::get('/edit/{id}', [SupplierController::class, 'edit'])->name('supplier.edit');
+    Route::post('/update/{id}', [SupplierController::class, 'update'])->name('supplier.update');
+    Route::post('/destroy/{id}', [SupplierController::class, 'destroy'])->name('supplier.destroy');
+});
+// Route::resource('/category', \App\Http\Controllers\CategoryController::class)->only(['create', 'store', 'index', 'edit', 'update', 'destroy']);
+Route::get('/user', [UserContrller::class, 'index'])->name('user.index');
+Route::post('/store', [UserContrller::class, 'store'])->name('user.store');
+Route::get('/user/edit/{id}', [UserContrller::class, 'edit'])->name('user.edit');
+Route::post('/user/update/{id}', [UserContrller::class, 'update'])->name('user.update');
+Route::post('/user/destroy/{id}', [UserContrller::class, 'destroy'])->name('user.destroy');
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__ . '/auth.php';
