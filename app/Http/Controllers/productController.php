@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\product;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 use function PHPUnit\Framework\returnSelf;
 
@@ -12,10 +13,30 @@ class productController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    // public function index()
+    // {
+    //     $products = Product::all();
+    //     return view("products.index", compact("products"));
+    // }
+
+    public function index(Request $request)
     {
-        $products = Product::all();
-        return view("products.index", compact("products"));
+        if ($request->ajax()) {
+            return DataTables::of(Product::query())
+                ->addColumn('actions', function ($product) {
+                    return '
+                    <a href="' . route('products.edit', $product->id) . '" class="btn btn-sm btn-info">Edit</a>
+                    <form action="' . route('products.destroy', $product->id) . '" method="POST" style="display:inline;">
+                        ' . csrf_field() . '
+                        <button class="btn btn-sm btn-danger">Delete</button>
+                    </form>
+                ';
+                })
+                ->rawColumns(['actions'])
+                ->make(true);
+        }
+
+        return view('products.index');
     }
 
     /**
@@ -31,13 +52,13 @@ class productController extends Controller
      */
     public function store(Request $request)
     {
-       product::create([
-        'name'=>$request->name,
-        'description'=>$request->description,
-        'price'=>$request->price,
-        'stock'=>$request->stock,
-       ]); 
-       return redirect()->back()->with('success','Product created successfully');
+        product::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'price' => $request->price,
+            'stock' => $request->stock,
+        ]);
+        return redirect()->back()->with('success', 'Product created successfully');
     }
 
     /**
@@ -64,12 +85,12 @@ class productController extends Controller
     {
         $product = Product::find($id);
         $product->update([
-            'name'=>$request->name,
-            'description'=>$request->description,
-            'price'=>$request->price,
-            'stock'=>$request->stock,
+            'name' => $request->name,
+            'description' => $request->description,
+            'price' => $request->price,
+            'stock' => $request->stock,
         ]);
-        return redirect()->route('products.index')->with('success','Product updated successfully');
+        return redirect()->route('products.index')->with('success', 'Product updated successfully');
     }
 
     /**
@@ -79,6 +100,6 @@ class productController extends Controller
     {
         $product = Product::find($id);
         $product->delete();
-        return redirect()->back()->with('success','Product deleted successfully');
+        return redirect()->back()->with('success', 'Product deleted successfully');
     }
 }
