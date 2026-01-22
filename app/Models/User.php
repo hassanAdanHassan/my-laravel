@@ -2,44 +2,48 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 
-class User extends Authenticatable
+class User extends Authenticatable implements AuthenticatableContract
+
 {
-    use HasApiTokens, HasFactory, Notifiable;
- protected $table = 'users';
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+    use HasFactory;
+    protected $table = 'users';
     protected $fillable = [
         'name',
+        'roles',
         'email',
-        'password',
+         'password',
     ];
-
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-        'password' => 'hashed',
-    ];
+       public function categories()
+    {
+        return $this->hasMany(Category::class, 'creater_id');
+    }
+    public function group_categories()
+    {
+        return $this->hasMany(group_categories::class, 'creater_id');
+    }
+    public function countables()
+    {
+        return $this->hasMany(countability::class, 'user_id');
+    }
+    public function stocks()
+    {
+        return $this->hasMany(Stock::class, 'user_id'); 
+    }
+    // public function orders()
+    // {
+    //     return $this->hasMany(Order::class, 'user_id');
+    // }
+    public function products()
+    {
+        return $this->hasMany(products::class, 'creater_id');
+    }
+    public function suppliers()
+    {
+        return $this->hasMany(suppliers::class, 'creater_id');
+    }
+    
 }

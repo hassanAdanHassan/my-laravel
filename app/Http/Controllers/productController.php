@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\product;
+use App\Models\products;
 use Illuminate\Http\Request;
 
 use function PHPUnit\Framework\returnSelf;
@@ -12,10 +13,11 @@ class productController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(request $request)
     {
-        $products = Product::all();
-        return view("products.index", compact("products"));
+     
+        $products = products::all();
+        return view('products.index', compact('products'));
     }
 
     /**
@@ -31,12 +33,19 @@ class productController extends Controller
      */
     public function store(Request $request)
     {
-       product::create([
+    //  dd($request->all());
+       products::create([
         'name'=>$request->name,
         'description'=>$request->description,
         'price'=>$request->price,
+        'amount'=>$request->amount,
+        'color'=>$request->color,
+        'stock_id'=>$request->stock_id,
+        'creater_id'=>$request->creater_id,
+        'group_category_id'=>$request->group_category_id,
         'stock'=>$request->stock,
        ]); 
+       
        return redirect()->back()->with('success','Product created successfully');
     }
 
@@ -53,7 +62,7 @@ class productController extends Controller
      */
     public function edit(string $id)
     {
-        $product = Product::find($id);
+        $product = products::find($id);
         return view('products.edit', compact('product'));
     }
 
@@ -62,7 +71,7 @@ class productController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $product = Product::find($id);
+        $product = products::find($id);
         $product->update([
             'name'=>$request->name,
             'description'=>$request->description,
@@ -77,7 +86,7 @@ class productController extends Controller
      */
     public function destroy(string $id)
     {
-        $product = Product::find($id);
+        $product = products::find($id);
         $product->delete();
         return redirect()->back()->with('success','Product deleted successfully');
     }

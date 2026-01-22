@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\groupRequest;
 use App\Models\Category;
-use App\Models\GroupCategory;
+use App\Models\group_categories as GroupCategory;
 use Illuminate\Http\Request;
 
 class groupController extends Controller
@@ -12,13 +12,26 @@ class groupController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(request $request)
     {
-        $groups = GroupCategory::all();
-       
-        return view('groupCategory.index', compact('groups'));
+       if($request->ajax()){
+        $groups = GroupCategory::with(['user','category'])->get();
+        return datatables()->of($groups)
+        ->addIndexColumn()
+        ->addColumn('action', function($row){
+            $btn = '<a href="'.route('groupCategory.edit', $row->id).'" class="edit btn btn-primary btn-sm">Edit</a>
+            <form action="'.route('groupCategory.destroy', $row->id).'" method="POST" style="display:inline;">
+            '.csrf_field().'
+            <button type="submit" class="delete btn btn-danger btn-sm" onclick="return confirm(\'Are you sure?\')">Delete</button>
+            </form>';
+            return $btn;
+        })
+        ->rawColumns(['action'])
+        ->make(true);
     }
-
+        
+        return view('groupCategory.index');
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -32,8 +45,11 @@ class groupController extends Controller
      */
     public function store(request $request)
     {
+        // dd($request->all());
         GroupCategory::create([
             'name' => $request->groupname,
+            'user_id' => auth()->user()->id,
+            'category_id' => category::first()->id,
                   ]);
         return redirect()->back()->with('success', 'Group Category created successfully.');
     }

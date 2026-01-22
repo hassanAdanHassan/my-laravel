@@ -7,7 +7,7 @@
     @endif
 
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-        create product
+        create stock
     </button>
 
     <!-- Modal -->
@@ -16,7 +16,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">new product</h1>
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">new stock</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">

@@ -11,6 +11,27 @@
             <a href="#" class="nav-link">Contact</a>
         </li>
     </ul>
-   
+
+
+
+    <!-- drop dwon logout and user name -->
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+            <a class="nav-link" data-widget="navbar-search" href="#" role="button">
+                <i class="fas fa-user"></i> {{ Auth::user()->name ?? " " }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('logout') }}" role="button"
+                onclick="event.preventDefault();
+               document.getElementById('logout-form').submit();">
+                <i class="fas fa-sign-out-alt"></i> {{ __('Logout') }}
+            </a>
+
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                @csrf
+            </form>
+        </li>
+    </ul>
 
 </nav>

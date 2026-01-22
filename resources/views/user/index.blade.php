@@ -30,8 +30,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="email">email</label>
-                                <input type="email" class="form-control" name="email" 
-                                    placeholder="enter email">
+                                <input type="email" class="form-control" name="email" placeholder="enter email">
                             </div>
 
                             <div class="form-group">
@@ -63,6 +62,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Name</th>
+                                <th>roles</th>
                                 <th>email</th>
                                 <th>Actions</th>
 
@@ -73,7 +73,9 @@
                                 <tr>
                                     <td>{{ $user->id }}</td>
                                     <td>{{ $user->name }}</td>
+                                    <td>{{ $user->roles }}</td>
                                     <td>{{ $user->email }}</td>
+
                                     <td>
                                         <a href="{{ route('user.edit', $user->id) }}" class="btn btn-info btn-sm">Edit</a>
                                         <form action="{{ route('user.destroy', $user->id) }}" method="POST"

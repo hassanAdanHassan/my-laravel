@@ -3,18 +3,34 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-
+use Illuminate\Routing\Controller;
 use App\Http\Requests\categoryRequest;
+use App\Http\Requests\categoryUpdateRequest;
+use Symfony\Component\HttpFoundation\Request;
 
 class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+      if(request()->ajax()){
         $categories = Category::all();
-        return view('category.index', compact('categories'));
+        return datatables()->of($categories)
+        ->addIndexColumn()
+        ->addColumn('action', function($row){
+            $btn = '<a href="'.route('category.edit', $row->id).'" class="edit btn btn-primary btn-sm">Edit</a>
+            <form action="'.route('category.destroy', $row->id).'" method="POST" style="display:inline;">
+            '.csrf_field().'
+            <button type="submit" class="delete btn btn-danger btn-sm" onclick="return confirm(\'Are you sure?\')">Delete</button>
+            </form>';
+            return $btn;
+        })
+        ->rawColumns(['action'])
+        ->make(true);
+      }
+        return view('category.index');
     }
 
     /**
@@ -30,13 +46,15 @@ class CategoryController extends Controller
      */
     public function store(categoryRequest $categoryRequest)
     {
-        
+
+    
+      
            Category::create([
             'name' => $categoryRequest->name,
-            'slug' => $categoryRequest->slug,
-            'description' => $categoryRequest->description,
-            'amount' => $categoryRequest->amount,
+            'creater_id' => auth()->id(),
+                       
         ]);
+        
 
         return redirect()->back()->with('success', 'Category created successfully.');
     }
