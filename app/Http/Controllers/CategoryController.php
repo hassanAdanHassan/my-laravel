@@ -15,21 +15,22 @@ class CategoryController extends Controller
      */
     public function index(Request $request)
     {
-      if(request()->ajax()){
-        $categories = Category::all();
-        return datatables()->of($categories)
-        ->addIndexColumn()
-        ->addColumn('action', function($row){
-            $btn = '<a href="'.route('category.edit', $row->id).'" class="edit btn btn-primary btn-sm">Edit</a>
-            <form action="'.route('category.destroy', $row->id).'" method="POST" style="display:inline;">
-            '.csrf_field().'
+        $categories = Category::with('user');
+      dd( $categories)->user();
+        if (request()->ajax()) {
+            return datatables()->of($categories)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn = '<a href="' . route('category.edit', $row->id) . '" class="edit btn btn-primary btn-sm">Edit</a>
+            <form action="' . route('category.destroy', $row->id) . '" method="POST" style="display:inline;">
+            ' . csrf_field() . '
             <button type="submit" class="delete btn btn-danger btn-sm" onclick="return confirm(\'Are you sure?\')">Delete</button>
             </form>';
-            return $btn;
-        })
-        ->rawColumns(['action'])
-        ->make(true);
-      }
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
         return view('category.index');
     }
 
@@ -47,38 +48,35 @@ class CategoryController extends Controller
     public function store(categoryRequest $categoryRequest)
     {
 
-    
-      
-           Category::create([
+
+
+        Category::create([
             'name' => $categoryRequest->name,
             'creater_id' => auth()->id(),
-                       
+
         ]);
-        
+
 
         return redirect()->back()->with('success', 'Category created successfully.');
     }
 
-    public function show(string $id)
-    {
-        
-    }
+    public function show(string $id) {}
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id )
+    public function edit($id)
     {
-        
-       $category = Category::findOrFail($id);
-       
+
+        $category = Category::findOrFail($id);
+
         return view('category.edit', compact('category'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(categoryRequest $categoryRequest, string $id )
+    public function update(categoryRequest $categoryRequest, string $id)
     {
         $category = Category::findOrFail($id);
 
