@@ -33,11 +33,10 @@
                                 <div class="form-group">
                                     <select class="form-control select2 select2-hidden-accessible" style="width: 100%;"
                                         data-select2-id="1" tabindex="-1" aria-hidden="true">
-                                        <option selected="selected" data-select2-id="3">Hassan</option>
-                                        <option data-select2-id="33">mahamed</option>
-                                        <option data-select2-id="34">Cali</option>
-                                        
-                                       
+                                        <option data-select2-id="3">--select category--</option>
+                                        @foreach ($categories as $category)
+                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        @endforeach   
                                     </select>
 
                                 </div>
@@ -66,8 +65,8 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Name</th>
-                                <th>category</th>
-                                <th>creater</th>
+                                <th>Category</th>
+                                <th>User</th>
                                 <th>action</th>
 
 
@@ -100,12 +99,12 @@
                         name: 'name'
                     },
                     {
-                        data: 'category_id',
-                        name: 'category'
+                        data: 'category.name',
+                        name: 'category.name'
                     },
                     {
-                        data: 'user_id',
-                        name: 'user'
+                        data: 'user.name',
+                        name: 'user.name'
                     },
                     {
                         data: 'action',

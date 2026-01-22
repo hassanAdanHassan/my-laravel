@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class group_categories extends Model
+class GroupCategory extends Model
 {
     use HasFactory;
     protected $table = 'group_categories';
@@ -14,12 +14,12 @@ class group_categories extends Model
         'category_id',
         'user_id',
     ];
-    public function users()
+    public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class);
     }
-    public function categories()
+    public function category()
     {
-        return $this->belongsTo(Category::class, 'category_id');
+        return $this->belongsTo(Category::class);
     }
 }

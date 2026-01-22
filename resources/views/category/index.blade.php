@@ -80,8 +80,8 @@
                         name: 'name'
                     },
                     {
-                        data: 'creater_id',
-                        name: 'creater_id'
+                        data: 'user.name',
+                        name: 'user.name'
                     },
 
 

@@ -14,8 +14,13 @@ class category extends Model
         'category_id',
         'creater_id',
     ];
-    public function parentCategory()
+    public function groupCategories()
     {
-        return $this->belongsTo(Category::class, 'category_id');
+        return $this->hasMany(GroupCategory::class, 'category_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'creater_id');
     }
 }
