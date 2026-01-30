@@ -2,9 +2,8 @@
 
 namespace App\Models;
 
-use App\Models\groupcategories;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class category extends Model
 {
@@ -15,13 +14,13 @@ class category extends Model
         'category_id',
         'creater_id',
     ];
+    public function groupCategories()
+    {
+        return $this->hasMany(GroupCategory::class, 'category_id');
+    }
 
     public function user()
     {
-        return $this->belongsTo(User::class , 'creater_id');
-    }
-    public function groupCategories()
-    {
-        return $this->hasMany(groupcategories::class);
+        return $this->belongsTo(User::class, 'creater_id');
     }
 }

@@ -6,7 +6,7 @@
         </div>
     @endif
 
-    <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
         create groupcategory
     </button>
 
@@ -29,14 +29,14 @@
                                     placeholder="Enter groupname">
                             </div>
                             <div class="form-group">
-                                <label>categories</label>
+                                <label>Minimal</label>
                                 <div class="form-group">
                                     <select class="form-control select2 select2-hidden-accessible" style="width: 100%;"
-                                        data-select2-id="1" tabindex="-1" aria-hidden="true" name="category_id">
-                                        <option value="">choose category</option>
+                                        data-select2-id="1" tabindex="-1" aria-hidden="true">
+                                        <option data-select2-id="3">--select category--</option>
                                         @foreach ($categories as $category)
                                             <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                        @endforeach
+                                        @endforeach   
                                     </select>
 
                                 </div>
@@ -65,9 +65,11 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Name</th>
-                                <th>category</th>
-                                <th>creater</th>
+                                <th>Category</th>
+                                <th>User</th>
                                 <th>action</th>
+
+
                             </tr>
                         </thead>
 
@@ -87,7 +89,7 @@
             $('#groupCategory').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('groupCategory.index') }}",
+                ajax: '{{ route('groupCategory.index') }}',
                 columns: [{
                         data: 'id',
                         name: 'id'
