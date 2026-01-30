@@ -14,18 +14,7 @@
                         <label for="name">Name</label>
                         <input type="text" class="form-control" id="name" name="name" value="{{ $category->name }}">
                     </div>
-                    <div class="form-group">
-                        <label for="slug">Slug</label>
-                        <input type="text" class="form-control" id="slug" name="slug" value="{{ $category->slug }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="description">Description</label>
-                        <textarea class="form-control" id="description" name="description">{{ $category->description }}</textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="amount">Amount</label>
-                        <input type="number" class="form-control" id="amount" name="amount" value="{{ $category->amount }}">
-                    </div>
+                   
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">

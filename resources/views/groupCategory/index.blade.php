@@ -6,7 +6,7 @@
         </div>
     @endif
 
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+    <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
         create groupcategory
     </button>
 
@@ -29,15 +29,14 @@
                                     placeholder="Enter groupname">
                             </div>
                             <div class="form-group">
-                                <label>Minimal</label>
+                                <label>categories</label>
                                 <div class="form-group">
                                     <select class="form-control select2 select2-hidden-accessible" style="width: 100%;"
-                                        data-select2-id="1" tabindex="-1" aria-hidden="true">
-                                        <option selected="selected" data-select2-id="3">Hassan</option>
-                                        <option data-select2-id="33">mahamed</option>
-                                        <option data-select2-id="34">Cali</option>
-                                        
-                                       
+                                        data-select2-id="1" tabindex="-1" aria-hidden="true" name="category_id">
+                                        <option value="">choose category</option>
+                                        @foreach ($categories as $category)
+                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        @endforeach
                                     </select>
 
                                 </div>
@@ -69,8 +68,6 @@
                                 <th>category</th>
                                 <th>creater</th>
                                 <th>action</th>
-
-
                             </tr>
                         </thead>
 
@@ -90,7 +87,7 @@
             $('#groupCategory').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{ route('groupCategory.index') }}',
+                ajax: "{{ route('groupCategory.index') }}",
                 columns: [{
                         data: 'id',
                         name: 'id'
@@ -100,12 +97,12 @@
                         name: 'name'
                     },
                     {
-                        data: 'category_id',
-                        name: 'category'
+                        data: 'category.name',
+                        name: 'category.name'
                     },
                     {
-                        data: 'user_id',
-                        name: 'user'
+                        data: 'user.name',
+                        name: 'user.name'
                     },
                     {
                         data: 'action',

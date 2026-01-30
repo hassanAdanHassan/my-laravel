@@ -40,43 +40,47 @@
                   data-accordion="false">
                   <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-                  <li class="nav-item menu-open">
-                      <a href="#" class="nav-link active">
-                          <i class="nav-icon fas fa-tachometer-alt"></i>
-                          <p>
-                              Categorys
-                              <i class="right fas fa-angle-left"></i>
-                          </p>
-                      </a>
+                  @can('admin-only')
+                      <li class="nav-item menu-open">
+                          <a href="#" class="nav-link active">
+                              <i class="nav-icon fas fa-tachometer-alt"></i>
+                              <p>
+                                  Categorys
+                                  <i class="right fas fa-angle-left"></i>
+                              </p>
+                          </a>
 
-                      <ul class="nav nav-treeview">
-                          <li class="nav-item">
-                              <a href="{{ route('category.index') }}" class="nav-link active">
-                                  <i class="far fa-circle nav-icon"></i>
-                                  <p> Category</p>
-                              </a>
-                          </li>
-                          <li class="nav-item">
-                              <a href="{{ route('groupCategory.index') }}" class="nav-link ">
-                                  <i class="far fa-circle nav-icon"></i>
-                                  <p>groups Category</p>
-                              </a>
-                          </li>
-                          <li class="nav-item">
-                              <a href="{{ route('products.index') }}" class="nav-link">
-                                  <i class="far fa-circle nav-icon"></i>
-                                  <p>products</p>
-                              </a>
-                          </li>
-                          <li class="nav-item">
-                              <a href="{{ route('supplier.index') }}" class="nav-link">
-                                  <i class="far fa-circle nav-icon"></i>
-                                  <p>suppliers</p>
-                              </a>
-                          </li>
-                      </ul>
+                          <ul class="nav nav-treeview">
 
-                  </li>
+                              <li class="nav-item">
+                                  <a href="{{ route('category.index') }}" class="nav-link active">
+                                      <i class="far fa-circle nav-icon"></i>
+                                      <p> Category</p>
+                                  </a>
+                              </li>
+
+                              <li class="nav-item">
+                                  <a href="{{ route('groupCategory.index') }}" class="nav-link ">
+                                      <i class="far fa-circle nav-icon"></i>
+                                      <p>groups Category</p>
+                                  </a>
+                              </li>
+                              <li class="nav-item">
+                                  <a href="{{ route('products.index') }}" class="nav-link">
+                                      <i class="far fa-circle nav-icon"></i>
+                                      <p>products</p>
+                                  </a>
+                              </li>
+                              <li class="nav-item">
+                                  <a href="{{ route('supplier.index') }}" class="nav-link">
+                                      <i class="far fa-circle nav-icon"></i>
+                                      <p>suppliers</p>
+                                  </a>
+                              </li>
+                          </ul>
+
+                      </li>
+                  @endcan
                   <li class="nav-item menu-open">
                       <a href="#" class="nav-link active">
                           <i class="nav-icon fas fa-boxes"></i>
@@ -88,52 +92,34 @@
 
                       <ul class="nav nav-treeview">
                           <li class="nav-item">
-                              <a href="#" class="nav-link active">
+                              <a href="{{ route('location.index') }}" class="nav-link active">
                                   <i class="far fa-circle nav-icon"></i>
                                   <p> location</p>
                               </a>
                           </li>
-                          <li class="nav-item">
-                              <a href="{{ route('stocks.index') }}" class="nav-link">
-                                  <i class="far fa-circle nav-icon"></i>
-                                  <p>stock</p>
-                              </a>
-                          </li>
-                          <li class="nav-item">
-                              <a href="#" class="nav-link">
-                                  <i class="far fa-circle nav-icon"></i>
-                                  <p>responsible</p>
-                              </a>
-                          </li>
-                          <li class="nav-item">
-                              <a href="#" class="nav-link">
-                                  <i class="far fa-circle nav-icon"></i>
-                                  <p>countability</p>
-                              </a>
-                          </li>
                       </ul>
 
                   </li>
+                  @can('admin-only')
+                      <li class="nav-item">
+                          <a href="#" class="nav-link">
+                              <i class="nav-icon fas fa-chart-pie"></i>
+                              <p>
+                                  USERS
+                                  <i class="right fas fa-angle-left"></i>
+                              </p>
+                          </a>
+                          <ul class="nav nav-treeview">
+                              <li class="nav-item">
+                                  <a href="{{ url('/user') }}" class="nav-link">
+                                      <i class="far fa-circle nav-icon"></i>
+                                      <p>Users</p>
+                                  </a>
+                              </li>
 
-                  <li class="nav-item">
-                      <a href="#" class="nav-link">
-                          <i class="nav-icon fas fa-chart-pie"></i>
-                          <p>
-                              USERS
-                              <i class="right fas fa-angle-left"></i>
-                          </p>
-                      </a>
-                      <ul class="nav nav-treeview">
-                          <li class="nav-item">
-                              <a href="{{ url('/user') }}" class="nav-link">
-                                  <i class="far fa-circle nav-icon"></i>
-                                  <p>Users</p>
-                              </a>
-                          </li>
-
-                      </ul>
-                  </li>
-
+                          </ul>
+                      </li>
+                  @endcan
               </ul>
           </nav>
           <!-- /.sidebar-menu -->

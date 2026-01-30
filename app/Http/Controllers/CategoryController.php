@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Routing\Controller;
 use App\Http\Requests\categoryRequest;
-use App\Http\Requests\categoryUpdateRequest;
+use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Request;
+
 
 class CategoryController extends Controller
 {
@@ -15,22 +16,28 @@ class CategoryController extends Controller
      */
     public function index(Request $request)
     {
-        $categories = Category::with('user');
-      dd( $categories)->user();
+        $categories = Category::with(["user:id,name"])->get();
+        // dd($categories);
         if (request()->ajax()) {
             return datatables()->of($categories)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $btn = '<a href="' . route('category.edit', $row->id) . '" class="edit btn btn-primary btn-sm">Edit</a>
-            <form action="' . route('category.destroy', $row->id) . '" method="POST" style="display:inline;">
-            ' . csrf_field() . '
-            <button type="submit" class="delete btn btn-danger btn-sm" onclick="return confirm(\'Are you sure?\')">Delete</button>
-            </form>';
+                        $btn = '';
+                    if(auth()->user()->can('update', $row)) {
+                    $btn = '<a href="' . route('category.edit', $row->id) . '" class="edit btn btn-primary btn-sm">Edit</a>';
+        }
+        if(auth()->user()->can('delete', $row)) {
+                    $btn .= "<form action='" . route('category.destroy', $row->id) . "' method='POST' style='display:inline;'>
+            " . csrf_field() . "
+            <button type='submit' class='delete btn btn-danger btn-sm' onclick='return confirm(\"Are you sure " . $row->name . "?\")'>Delete</button>
+            </form>";
+        }
                     return $btn;
                 })
                 ->rawColumns(['action'])
                 ->make(true);
         }
+         Gate::authorize('admin-only');
         return view('category.index');
     }
 
@@ -57,7 +64,7 @@ class CategoryController extends Controller
         ]);
 
 
-        return redirect()->back()->with('success', 'Category created successfully.');
+        return redirect()->back()->with('success', 'Category '.$categoryRequest->name . ' created successfully.');
     }
 
     public function show(string $id) {}
@@ -67,7 +74,7 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-
+         $this->authorize('update', Category::class);
         $category = Category::findOrFail($id);
 
         return view('category.edit', compact('category'));
@@ -98,6 +105,6 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
         $category->delete();
 
-        return redirect("/category")->with('success', 'Category deleted successfully.');
+        return redirect("/category")->with('success', $category->name . ' deleted successfully.');
     }
 }

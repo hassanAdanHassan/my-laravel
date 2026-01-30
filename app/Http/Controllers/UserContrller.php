@@ -20,7 +20,7 @@ class UserContrller extends Controller
     public function store(Request $request)
     {
         
-    dd($request->all());
+    // dd($request->all());
           User::create([
             'name' => $request->name,
             'email' => $request->email,

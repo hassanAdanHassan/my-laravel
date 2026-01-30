@@ -1,37 +1,28 @@
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
-    <ul class="navbar-nav">
-        <li class="nav-item">
-            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-        </li>
-        <li class="nav-item d-none d-sm-inline-block">
-            <a href="index3.html" class="nav-link">Home</a>
-        </li>
-        <li class="nav-item d-none d-sm-inline-block">
-            <a href="#" class="nav-link">Contact</a>
-        </li>
-    </ul>
+ 
 
-
-
-    <!-- drop dwon logout and user name -->
+    <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-            <a class="nav-link" data-widget="navbar-search" href="#" role="button">
-                <i class="fas fa-user"></i> {{ Auth::user()->name ?? " " }}
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('logout') }}" role="button"
-                onclick="event.preventDefault();
-               document.getElementById('logout-form').submit();">
+
+      <li class="nav-item dropdown show">
+        <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="true">
+        <i class="fas fa-user"></i> {{ Auth::user()->name ?? " " }}
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right show" style="left: inherit; right: 0px;">
+            <div class="dropdown-divider"></div>
+              
+            <a href="{{ route('logout') }}" class="dropdown-item"
+                 onclick="event.preventDefault();
+                             document.getElementById('logout-form').submit();">
                 <i class="fas fa-sign-out-alt"></i> {{ __('Logout') }}
             </a>
-
+          
             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                 @csrf
             </form>
-        </li>
+        </div>
+      </li>
+   
     </ul>
-
-</nav>
+  </nav>

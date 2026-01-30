@@ -15,7 +15,7 @@ class admin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->check() && auth()->user()->roles=='admin') {
+        if (auth()->check() && auth()->user()->roles=='admin' || auth()->user()->roles=='superadmin'|| auth()->user()->roles=='user') {
             return $next($request);
         }
         abort(403, 'Unauthorized waa khalaad.');

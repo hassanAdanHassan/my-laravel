@@ -18,10 +18,10 @@ class category extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class , 'creater_id');
     }
-public function groupCategory()
+    public function groupCategories()
     {
-        return $this->belongsTo(groupcategories::class, 'category_id');
+        return $this->hasMany(groupcategories::class);
     }
 }

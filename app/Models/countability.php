@@ -17,10 +17,8 @@ class countability extends Model
         'countable_id',
         'user_id',
     ];
-    public function stocks()
-    {
-        return $this->hasMany(Stock::class, 'countable_id');
-    }
+   
+   
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');

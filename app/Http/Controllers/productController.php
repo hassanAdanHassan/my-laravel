@@ -6,6 +6,7 @@ use App\Models\product;
 use App\Models\products;
 use Illuminate\Http\Request;
 
+use App\Models\groupcategories;
 use function PHPUnit\Framework\returnSelf;
 
 class productController extends Controller
@@ -15,9 +16,32 @@ class productController extends Controller
      */
     public function index(request $request)
     {
-     
-        $products = products::all();
-        return view('products.index', compact('products'));
+      $group_categories = groupcategories::all();   
+        $products = products::with(['groupCategory:id,name'])->get();
+    //    dd($categories);
+            if (request()->ajax()) {
+            return datatables()->of($products)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                        $btn = '';
+                    // if(auth()->user()->can('update', $row)) {
+                    $btn = '<a href="' . route('products.edit', $row->id) . '" class="edit btn btn-primary btn-sm">Edit</a>';
+        // }
+        // if(auth()->user()->can('delete', $row)) {
+                    $btn .= "<form action='" . route('products.destroy', $row->id) . "' method='POST' style='display:inline;'>
+            " . csrf_field() . "
+            <button type='submit' class='delete btn btn-danger btn-sm' onclick='return confirm(\"Are you sure " . $row->name . "?\")'>Delete</button>
+            </form>";
+        // }
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+        //  Gate::authorize('admin-only');
+      
+          
+        return view('products.index', compact('products','group_categories'));
     }
 
     /**
@@ -33,7 +57,7 @@ class productController extends Controller
      */
     public function store(Request $request)
     {
-    //  dd($request->all());
+    // dd($request->all());
        products::create([
         'name'=>$request->name,
         'description'=>$request->description,
@@ -41,9 +65,8 @@ class productController extends Controller
         'amount'=>$request->amount,
         'color'=>$request->color,
         'stock_id'=>$request->stock_id,
-        'creater_id'=>$request->creater_id,
-        'group_category_id'=>$request->group_category_id,
-        'stock'=>$request->stock,
+        'creater_id'=>$request->user()->id,
+        'group_category_id'=>$request->group_category_id,        
        ]); 
        
        return redirect()->back()->with('success','Product created successfully');

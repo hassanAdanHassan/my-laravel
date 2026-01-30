@@ -30,30 +30,7 @@
                       <label for="description" class="form-label">Description</label>
                       <input type="text" class="form-control" id="description" name="description">
                     </div>
-                    <div class="mb-3">
-                      <label for="price" class="form-label">Price</label>
-                      <input type="number" class="form-control" id="price" name="price">
-                    </div>
-                    <div class="mb-3">
-                      <label for="amount" class="form-label">Amount</label>
-                      <input type="number" class="form-control" id="amount" name="amount">
-                    </div>
-                    <div class="mb-3">
-                      <label for="color" class="form-label">Color</label>
-                      <input type="text" class="form-control" id="color" name="color">
-                    </div>
-                    <div class="mb-3">
-                      <label for="stock_id" class="form-label">Stock ID</label>
-                      <input type="number" class="form-control" id="stock_id" name="stock_id">
-                    </div>
-                       <div class="mb-3">
-                      <label for="creater_id" class="form-label">creater_id</label>
-                      <input type="number" class="form-control" id="creater_id" name="creater_id">
-                    </div>
-                    <div class="mb-3">
-                      <label for="group_category_id" class="form-label">Group Category ID</label>
-                      <input type="number" class="form-control" id="group_category_id" name="group_category_id">
-                    </div>
+                  
                     <button type="submit" class="btn btn-primary">Create Product</button>
                   </form>
                 </div>

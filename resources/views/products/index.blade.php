@@ -6,7 +6,7 @@
         </div>
     @endif
 
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+    <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
         create product
     </button>
 
@@ -20,42 +20,37 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                  <form action="{{ route('products.store') }}" method="POST">
-                    @csrf
-                    <div class="mb-3">
-                      <label for="name" class="form-label">Product Name</label>
-                      <input type="text" class="form-control" id="name" name="name" required>
-                    </div>
-                    <div class="mb-3">
-                      <label for="description" class="form-label">Description</label>
-                      <input type="text" class="form-control" id="description" name="description">
-                    </div>
-                    <div class="mb-3">
-                      <label for="price" class="form-label">Price</label>
-                      <input type="number" class="form-control" id="price" name="price">
-                    </div>
-                    <div class="mb-3">
-                      <label for="amount" class="form-label">Amount</label>
-                      <input type="number" class="form-control" id="amount" name="amount">
-                    </div>
-                    <div class="mb-3">
-                      <label for="color" class="form-label">Color</label>
-                      <input type="text" class="form-control" id="color" name="color">
-                    </div>
-                    <div class="mb-3">
-                      <label for="stock_id" class="form-label">Stock ID</label>
-                      <input type="number" class="form-control" id="stock_id" name="stock_id">
-                    </div>
-                       <div class="mb-3">
-                      <label for="creater_id" class="form-label">creater_id</label>
-                      <input type="number" class="form-control" id="creater_id" name="creater_id">
-                    </div>
-                    <div class="mb-3">
-                      <label for="group_category_id" class="form-label">Group Category ID</label>
-                      <input type="number" class="form-control" id="group_category_id" name="group_category_id">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Create Product</button>
-                  </form>
+                    <form action="{{ route('products.store') }}" method="POST">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Product Name</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <input type="text" class="form-control" id="description" name="description">
+                        </div>
+                        <div class="mb-3">
+                            <label for="price" class="form-label">Price</label>
+                            <input type="number" class="form-control" id="price" name="price">
+                        </div>
+                        <div class="mb-3">
+                            <label for="amount" class="form-label">Amount</label>
+                            <input type="number" class="form-control" id="amount" name="amount">
+                        </div>
+                        <div class="mb-3">
+                            <label for="color" class="form-label">Color</label>
+                            <input type="text" class="form-control" id="color" name="color">
+                        </div>
+                        <label for="">groups category</label>
+                        <select class="form-select mb-3" aria-label="Default select example" name="group_category_id">
+                            <option selected>select category</option>
+                            @foreach ($group_categories as $group_category)
+                                <option value="{{ $group_category->id }}">{{ $group_category->name }}</option>
+                            @endforeach
+                        </select>
+                        <button type="submit" class="btn btn-primary">Create Product</button>
+                    </form>
                 </div>
 
             </div>
@@ -70,9 +65,9 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <table id="category" class="table table-bordered table-hover">
+                    <table id="products" class="table table-bordered table-hover">
                         <thead>
-                               <tr>
+                            <tr>
                                 <th>ID</th>
                                 <th>Name</th>
                                 <th>description</th>
@@ -80,13 +75,13 @@
                                 <th>amount</th>
                                 <th>color</th>
                                 <th>group_category</th>
-                                <th>stock</th>
                                 <th>create-at</th>
                                 <th>Actions</th>
 
                             </tr>
                         </thead>
-
+                        <tbody>
+                         
 
                     </table>
                 </div>
@@ -97,3 +92,53 @@
         <!-- /.col -->
     </div>
 @endsection
+@push('scripts')
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var table = $('#products').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('products.index') }}",
+                columns: [{
+                        data: 'id',
+                        name: 'id'
+                    },
+                    {
+                        data: 'name',
+                        name: 'name'
+                    },
+                    {
+                        data: 'description',
+                        name: 'description'
+                    },
+                    {
+                        data: 'price',
+                        name: 'price'
+                    },
+                    {
+                        data: 'amount',
+                        name: 'amount'
+                    },
+                    {
+                        data: 'color',
+                        name: 'color'
+                    },
+                    {
+                        data: 'group_category.name',
+                        name: 'group_category.name'
+                    },
+                    {
+                        data: 'created_at',
+                        name: 'created_at'
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: true,
+                        searchable: true
+                    },
+                ]
+            });
+        });
+    </script>
+@endpush

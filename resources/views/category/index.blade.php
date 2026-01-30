@@ -6,10 +6,10 @@
         </div>
     @endif
 
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+    <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
         create category
     </button>
-
+ 
     <!-- Modal -->
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -48,7 +48,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Name</th>
-                                <th>Creater ID</th>
+                                <th>Creater name</th>
                                 <th>Actions</th>
 
                             </tr>

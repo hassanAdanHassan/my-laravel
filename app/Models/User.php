@@ -5,11 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable implements AuthenticatableContract
 
 {
+    
     use HasFactory;
+    //trait 
+    use Notifiable;
     protected $table = 'users';
     protected $fillable = [
         'name',
@@ -21,18 +25,15 @@ class User extends Authenticatable implements AuthenticatableContract
     {
         return $this->hasMany(Category::class, 'creater_id');
     }
-    public function group_categories()
+    public function groupcategories()
     {
-        return $this->hasMany(group_categories::class, 'creater_id');
+        return $this->hasMany(groupcategories::class, 'creater_id');
     }
     public function countables()
     {
         return $this->hasMany(countability::class, 'user_id');
     }
-    public function stocks()
-    {
-        return $this->hasMany(Stock::class, 'user_id'); 
-    }
+
     // public function orders()
     // {
     //     return $this->hasMany(Order::class, 'user_id');

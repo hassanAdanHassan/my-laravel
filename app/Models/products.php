@@ -15,20 +15,16 @@ class products extends Model
         'price',
         'amount',
         'color',
-        'stock_id',
         'creater_id',
         'group_category_id',
     ];
     public function user()
     {
-        return $this->belongsTo(User::class, 'creater_id');
+        return $this->belongsTo(User::class);
     }
     public function groupCategory()
     {
-        return $this->belongsTo(group_categories::class, 'group_category_id');
+        return $this->belongsTo(groupcategories::class);
     }
-    public function stock()
-    {
-        return $this->belongsTo(Stock::class, 'stock_id');
-    }
+   
 }
