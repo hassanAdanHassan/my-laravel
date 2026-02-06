@@ -45,20 +45,7 @@
                                 <input type="text" class="form-control" name="address" id="address"
                                     placeholder="enter address">
                             </div>
-                            <div class="form-group">
-                                <label>products</label>
-                                <div class="form-group">
-                                    <select class="form-control select2 select2-hidden-accessible" name="product_id"
-                                        style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
-
-                                        @foreach ($products as $product)
-                                            <option value="{{ $product->id }}">{{ $product->name }}</option>
-                                        @endforeach
-                                    </select>
-
-                                </div>
-                            </div>
-
+                            
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
@@ -131,8 +118,13 @@
                         name: 'address'
                     },
                     {
-                        data: 'products[0].name',
-                        name: 'products[0].name'
+                        data: 'products',
+                        name: 'products',
+                        render: function(data, type, row) {
+                            // bootstrap badge
+                            var badges = data.map(product => '<span class="badge bg-primary">' + product.name + '</span>');
+                            return badges.join(' ');
+                        }
                     },
 
                     {
@@ -145,7 +137,7 @@
                         name: 'action',
                         orderable: false,
                         searchable: false
-                    },
+                    }
                 ]
             });
         });

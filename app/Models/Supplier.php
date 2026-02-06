@@ -15,11 +15,11 @@ class Supplier extends Model
         'phone',
         'address',
         'creater_id',
-        'product_id',
+        // 'product_id',
     ];  
     public function products()
     {
-        return $this->hasMany(products::class,'id');
+        return $this->hasMany(products::class,'supplier_id');
     }
     public function user()
     {

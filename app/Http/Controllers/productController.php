@@ -7,6 +7,8 @@ use App\Models\products;
 use Illuminate\Http\Request;
 
 use App\Models\groupcategories;
+use App\Models\Supplier;
+
 use function PHPUnit\Framework\returnSelf;
 
 class productController extends Controller
@@ -17,7 +19,9 @@ class productController extends Controller
     public function index(request $request)
     {
       $group_categories = groupcategories::all();   
-        $products = products::with(['groupCategory:id,name'])->get();
+      $suppliers = Supplier::get(['id','name']);
+
+        $products = products::with(['groupCategory:id,name', 'supplier:id,name'])->get();
     //    dd($categories);
             if (request()->ajax()) {
             return datatables()->of($products)
@@ -41,7 +45,7 @@ class productController extends Controller
         //  Gate::authorize('admin-only');
       
           
-        return view('products.index', compact('products','group_categories'));
+        return view('products.index', compact('products','group_categories','suppliers'));
     }
 
     /**
@@ -66,7 +70,8 @@ class productController extends Controller
         'color'=>$request->color,
         'stock_id'=>$request->stock_id,
         'creater_id'=>$request->user()->id,
-        'group_category_id'=>$request->group_category_id,        
+        'group_category_id'=>$request->group_category_id,   
+        'supplier_id'=>$request->supplier_id,     
        ]); 
        
        return redirect()->back()->with('success','Product created successfully');

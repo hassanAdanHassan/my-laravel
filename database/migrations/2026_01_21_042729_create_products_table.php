@@ -18,11 +18,14 @@ return new class extends Migration
             $table->decimal('price', 10, 2);
             $table->decimal('amount', 10, 2);
             $table->string("color");
-
+        
             $table->unsignedBigInteger('creater_id');
             $table->foreign('creater_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('group_category_id');
             $table->foreign('group_category_id')->references('id')->on('group_categories')->onDelete('cascade');
+
+            $table->unsignedBigInteger('supplier_id');
+            $table->foreign('supplier_id')->references('id')->on('suppliers')->onDelete('cascade');
 
             $table->timestamps();
         });

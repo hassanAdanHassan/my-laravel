@@ -63,7 +63,7 @@ class SupplierController extends Controller
             'email' => $request->email,
             'phone' => $request->phone,
             'address' => $request->address,
-            'product_id' => $request->product_id,
+            // 'product_id' => $request->product_id,
             'creater_id' => auth()->id(),
         ]);
         return redirect()->back()->with('success', 'supplier created successfully');

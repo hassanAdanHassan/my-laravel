@@ -49,6 +49,15 @@
                                 <option value="{{ $group_category->id }}">{{ $group_category->name }}</option>
                             @endforeach
                         </select>
+
+                        <!-- Supplies dropdown -->
+                        <label for="">suppliers</label>
+                        <select class="form-select mb-3" aria-label="Default select example" name="supplier_id">
+                            <option selected>select supplier</option>
+                            @foreach ($suppliers as $supplier)
+                                <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
+                            @endforeach
+                        </select>
                         <button type="submit" class="btn btn-primary">Create Product</button>
                     </form>
                 </div>
@@ -61,7 +70,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Categories</h3>
+                    <h3 class="card-title">Products</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -75,6 +84,7 @@
                                 <th>amount</th>
                                 <th>color</th>
                                 <th>group_category</th>
+                                <th>Supplier</th>
                                 <th>create-at</th>
                                 <th>Actions</th>
 
@@ -126,6 +136,10 @@
                     {
                         data: 'group_category.name',
                         name: 'group_category.name'
+                    },
+                    {
+                        data: 'supplier.name',
+                        name: 'supplier.name'
                     },
                     {
                         data: 'created_at',

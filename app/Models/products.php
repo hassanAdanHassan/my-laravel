@@ -17,6 +17,7 @@ class products extends Model
         'color',
         'creater_id',
         'group_category_id',
+        'supplier_id',
     ];
     public function user()
     {
@@ -25,6 +26,11 @@ class products extends Model
     public function groupCategory()
     {
         return $this->belongsTo(groupcategories::class);
+    }
+
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class);
     }
     
    
