@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class suppliers extends Model
+class Supplier extends Model
 {
     use HasFactory;
     protected $table = 'suppliers';
@@ -17,12 +17,12 @@ class suppliers extends Model
         'creater_id',
         'product_id',
     ];  
-    public function product()
+    public function products()
     {
-        return $this->belongsTo(products::class, 'product_id');
+        return $this->hasMany(products::class,'id');
     }
     public function user()
     {
-        return $this->belongsTo(User::class, 'creater_id');
+        return $this->belongsTo(User::class,"creater_id");
     }
 }

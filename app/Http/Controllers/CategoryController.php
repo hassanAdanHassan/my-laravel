@@ -59,6 +59,7 @@ class CategoryController extends Controller
 
         Category::create([
             'name' => $categoryRequest->name,
+            
             'creater_id' => auth()->id(),
 
         ]);

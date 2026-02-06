@@ -9,9 +9,12 @@
         <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="true">
         <i class="fas fa-user"></i> {{ Auth::user()->name ?? " " }}
         </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right show" style="left: inherit; right: 0px;">
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right show nav-item dropdown" style="left: inherit; right: 0px; ">
             <div class="dropdown-divider"></div>
-              
+              <a href="{{route('profile.edit')}}" class="dropdown-item">
+            <i class="fas fa-user"></i> profile
+          
+          </a>
             <a href="{{ route('logout') }}" class="dropdown-item"
                  onclick="event.preventDefault();
                              document.getElementById('logout-form').submit();">
@@ -22,6 +25,7 @@
                 @csrf
             </form>
         </div>
+        
       </li>
    
     </ul>

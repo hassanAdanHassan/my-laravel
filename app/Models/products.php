@@ -26,5 +26,6 @@ class products extends Model
     {
         return $this->belongsTo(groupcategories::class);
     }
+    
    
 }

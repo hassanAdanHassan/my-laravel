@@ -47,4 +47,5 @@ class RegisteredUserController extends Controller
             return redirect(RouteServiceProvider::HOME);
             // return redirect()->route('login')->with('success', 'Registration successful. Please log in.');
     }
+    
 }

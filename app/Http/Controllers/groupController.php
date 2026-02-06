@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\groupRequest;
 use App\Models\Category;
-use App\Models\GroupCategory;
 use Illuminate\Http\Request;
+use App\Models\groupcategories;
+
 
 class groupController extends Controller
 {
@@ -15,10 +15,11 @@ class groupController extends Controller
     public function index(request $request)
     {
         if ($request->ajax()) {
-            $groups = GroupCategory::with('category', 'user')->select('*');
+            $groups = groupcategories::with('category', 'user')->select('*');
             return datatables()->of($groups)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
+
                     $btn = '<a href="' . route('groupCategory.edit', $row->id) . '" class="edit btn btn-primary btn-sm">Edit</a>
             <form action="' . route('groupCategory.destroy', $row->id) . '" method="POST" style="display:inline;">
             ' . csrf_field() . '
@@ -48,7 +49,7 @@ class groupController extends Controller
     public function store(request $request)
     {
         // dd($request->all());
-        GroupCategory::create([
+        groupcategories::create([
             'name' => $request->groupname,
             'user_id' => auth()->user()->id,
             'category_id' => category::first()->id,
@@ -70,7 +71,7 @@ class groupController extends Controller
      */
     public function edit(string $id)
     {
-        $group = GroupCategory::findOrFail($id);
+        $group = groupcategories::findOrFail($id);
 
         return view('groupCategory.edit', compact('group'));
     }
@@ -80,7 +81,7 @@ class groupController extends Controller
      */
     public function update(request $groupRequest, string $id)
     {
-        $group = GroupCategory::findOrFail($id);
+        $group = groupcategories::findOrFail($id);
         $group->update([
             'name' => $groupRequest->groupname,
         ]);
@@ -94,7 +95,7 @@ class groupController extends Controller
      */
     public function destroy(string $id)
     {
-        $group = GroupCategory::findOrFail($id);
+        $group = groupcategories::findOrFail($id);
         $group->delete();
 
         return redirect()->back()->with('success', 'Group Category deleted successfully ' . $group->name);

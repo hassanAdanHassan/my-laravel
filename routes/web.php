@@ -6,7 +6,7 @@ use App\Http\Controllers\UserContrller;
 use App\Http\Controllers\groupController;
 use App\Http\Controllers\stockController;
 use App\Http\Controllers\productController;
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProfilesController;
 use App\Http\Controllers\CategoryController;
 use \App\Http\Controllers\SupplierController;
 use App\Http\Controllers\DashboardController;
@@ -59,9 +59,9 @@ Route::post('/stocks/store', [stockController::class, 'store'])->name('stocks.st
 Route::middleware(["auth", "admin"])->prefix('user')->group(function () {
     Route::get('/', [UserContrller::class, 'index'])->name('user.index');
     Route::post('/store', [UserContrller::class, 'store'])->name('user.store');
-    Route::get('/user/edit/{id}', [UserContrller::class, 'edit'])->name('user.edit');
-    Route::post('/user/update/{id}', [UserContrller::class, 'update'])->name('user.update');
-    Route::post('/user/destroy/{id}', [UserContrller::class, 'destroy'])->name('user.destroy');
+    Route::get('/edit/{id}', [UserContrller::class, 'edit'])->name('user.edit');
+    Route::post('/update/{id}', [UserContrller::class, 'update'])->name('user.update');
+    Route::post('/destroy/{id}', [UserContrller::class, 'destroy'])->name('user.destroy');
 });
 
 Route::get('/dashboard', function () {
@@ -75,10 +75,16 @@ Route::middleware(['auth', 'admin'])->prefix('location')->group(function () {
     Route::post('/update/{id}', [locationsController::class, 'update'])->name('location.update');
     Route::post('/destroy/{id}', [locationsController::class, 'destroy'])->name('location.destroy');
 });
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+Route::middleware('auth')->prefix('profile')->group(function () {
+// Route::get('/',[ProfilesController::class, 'index'])->name('profile.index');
+Route::get('/',[ProfilesController::class, 'edit'])->name('profile.edit');
+Route::post('/update/{id}',[ProfilesController::class, 'update'])->name('profile.update');
+
 });
+// Route::middleware('auth')->group(function () {
+//     Route::get('/profile', [ProfileController::class, 'edit']);
+//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+// });
 
 require __DIR__ . '/auth.php';

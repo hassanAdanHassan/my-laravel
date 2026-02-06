@@ -42,9 +42,10 @@ class User extends Authenticatable implements AuthenticatableContract
     {
         return $this->hasMany(products::class, 'creater_id');
     }
-    public function suppliers()
-    {
-        return $this->hasMany(suppliers::class, 'creater_id');
-    }
+public function suppliers()
+ {
     
-}
+ return $this->hasMany(Suppliers::class, "creater_id"); 
+ 
+ }
+ }
