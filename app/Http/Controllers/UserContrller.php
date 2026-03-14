@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -12,8 +13,18 @@ class UserContrller extends Controller
      */
     public function index()
     {
-        $users = User::all();
-        return view('user.index', compact('users'));
+        // $users = User::all();
+        return view('user.index');
+    }
+
+
+    public function getUsers()
+    {
+        // $users = User::paginate(10);
+        // return UserResource::collection($users);
+        $users = User::query();
+        return datatables()->of($users)
+            ->make(true);
     }
 
 
@@ -50,10 +61,10 @@ class UserContrller extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
        
-        $user = User::findOrFail($id);
+        $user = User::findOrFail($request->id);
         $user->update([
             'name' => $request->name,
             'email' => $request->email,

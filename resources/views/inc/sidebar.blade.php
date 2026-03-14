@@ -77,6 +77,12 @@
                                       <p>suppliers</p>
                                   </a>
                               </li>
+                              <li class="nav-item">
+                                  <a href="{{ route('customer.index') }}" class="nav-link">
+                                      <i class="far fa-circle nav-icon"></i>
+                                      <p>customers</p>
+                                  </a>
+                              </li>
                           </ul>
 
                       </li>

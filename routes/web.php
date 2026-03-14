@@ -8,6 +8,7 @@ use App\Http\Controllers\stockController;
 use App\Http\Controllers\productController;
 use App\Http\Controllers\ProfilesController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CustomerController;
 use \App\Http\Controllers\SupplierController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\locationsController;
@@ -53,15 +54,23 @@ Route::middleware(["auth", "admin"])->prefix('Supplier')->group(function () {
     Route::post('/update/{id}', [SupplierController::class, 'update'])->name('supplier.update');
     Route::post('/destroy/{id}', [SupplierController::class, 'destroy'])->name('supplier.destroy');
 });
+Route::middleware(["auth", "admin"])->prefix('customer')->group(function () {
+    Route::get('/', [CustomerController::class, 'index'])->name('customer.index');
+    Route::post('/store', [CustomerController::class, 'store'])->name('customer.store');
+    Route::get('/edit/{id}', [CustomerController::class, 'edit'])->name('customer.edit');
+    Route::post('/update/{id}', [CustomerController::class, 'update'])->name('customer.update');
+    Route::post('/destroy/{id}', [CustomerController::class, 'destroy'])->name('customer.destroy');
+});
 Route::get('/stocks', [stockController::class, 'index'])->name('stocks.index');
 Route::post('/stocks/store', [stockController::class, 'store'])->name('stocks.store');
 
 Route::middleware(["auth", "admin"])->prefix('user')->group(function () {
-    Route::get('/', [UserContrller::class, 'index'])->name('user.index');
+    Route::get('/', [UserContrller::class, 'index'])->name('user.index');   
+    Route::get('/get-users', [UserContrller::class, 'getUsers'])->name('user.getUsers');
     Route::post('/store', [UserContrller::class, 'store'])->name('user.store');
     Route::get('/edit/{id}', [UserContrller::class, 'edit'])->name('user.edit');
-    Route::post('/update/{id}', [UserContrller::class, 'update'])->name('user.update');
-    Route::post('/destroy/{id}', [UserContrller::class, 'destroy'])->name('user.destroy');
+    Route::post('/update', [UserContrller::class, 'update'])->name('user.update');
+    Route::delete('/delete/{id}', [UserContrller::class, 'destroy'])->name('user.delete');
 });
 
 Route::get('/dashboard', function () {
